@@ -1,0 +1,24 @@
+运行mongod
+运行mongo
+
+创建管理员
+
+use admin
+db.createUser(
+  {
+    user: "myUserAdmin", //用户
+    pwd: "abc123", //密码
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ] //权限
+  }
+)
+重启MongoDB实例
+
+mongod --auth --port 27017 --dbpath <关联路径>
+
+终端输出”[initandlisten] waiting for connections on port 27017”, 
+启动完成
+再次打开mongo即可使用
+
+每次使用先打开终端输入 c:\data\bin\mongod --auth --port 27017 --dbpath c:\data\db
+目录以自己创建的为准
+再打开mongo
