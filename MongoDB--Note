@@ -129,6 +129,11 @@ db.SetName.save(document)
 在3.2版本开始，MongoDB提供以下更新集合文档的方法：
 db.collection.updateOne() 向指定集合更新单个文档
 db.collection.updateMany() 向指定集合更新多个文档
+示例：
+    db.users.update({}, {$set:{"sore":0}}, {multi:true})
+    db.users.update({"location":{$in:["suzhou", "hangzhou"]}},
+                    {$inc:{"score":808},
+                    {multi:true}
 
 MongoDB 与 RDBMS Where 语句比较
 如果你熟悉常规的 SQL 数据，通过下表可以更好的理解 MongoDB 的条件语句查询：
