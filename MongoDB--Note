@@ -123,7 +123,7 @@ db.col.update( { "count" : { $gt : 1 } } , { $set : { "test2" : "OK"} } );
 $inc 修改器：increase 增加
 用来增加已有的键对应的值，如果该键不存在则创建一个。注意，只能用于数值类型。
 例如，
-db.users.update({"name":"joe"})
+db.users.update({"name":"joe"}, {$inc:{"age":10})
 save() 方法通过传入的文档来替换已有文档。
 db.SetName.save(document)
 在3.2版本开始，MongoDB提供以下更新集合文档的方法：
