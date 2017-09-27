@@ -121,9 +121,23 @@ db.SetName.update(query，update[, upsert][, multi][, writeConcern])
 db.col.update( { "count" : { $gt : 1 } } , { $set : { "test2" : "OK"} } );        
 如果用$unset替代$set 会将某个键完全删除
 $inc 修改器：increase 增加
-用来增加已有的键对应的值，如果该键不存在则创建一个。注意，只能用于数值类型。
 例如，
 db.users.update({"name":"joe"}, {$inc:{"age":10})
+用来增加已有的键对应的值，如果该键不存在则创建一个。注意，只能用于数值类型。
+添加元素：$push 修改器
+如果数组已经存在，$push会向已有的数组末尾加入一个元素，要是没有就创建一个新的数组
+db.blog.updata({"title":"a blog post"},
+                {$push:{"comments":
+                    {"name":"Yang",
+                    "content":"nice post"}}}}
+如果有conmments，就加入后面的元素，如果没有，就在集合里创建一个comments字典
+删除元素$pop
+$pop从数组中任何一端删除元素
+{"$pop":{key: 1}}       从数组的末尾删除一个元素
+{"$pop":{key:-1}}       从数组的头部删除一个元素
+删除元素$pull:
+$pull:基于特定条件来删除元素，而不是依据元素的位置来删除
+db.lists.update({},{$pull:{"todo":"laundry"}})
 save() 方法通过传入的文档来替换已有文档。
 db.SetName.save(document)
 在3.2版本开始，MongoDB提供以下更新集合文档的方法：
