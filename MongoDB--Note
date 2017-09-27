@@ -267,4 +267,3 @@ limit()方法基本语法如下所示：
 skip() 方法脚本语法格式如下：
 >db.COLLECTION_NAME.find().limit(NUMBER).skip(NUMBER)
 skip和limit方法只适合小数据量分页，如果是百万级效率就会非常低，因为skip方法是一条条数据数过去的，建议使用where_limit
-
