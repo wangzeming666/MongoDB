@@ -1,24 +1,43 @@
-运行mongod
-运行mongo
+创建几个文件夹具体如下：数据库路径（data目录）、日志路径（logs目录）和日志文件（mongo.log文件）
 
-创建管理员
+创建配置文件mongo.conf，文件内容如下：
+[html] view plain copy
+#数据库路径  
+dbpath=D:\Mongo\data  
+#日志输出文件路径  
+logpath=D:\Mongo\logs\mongo.log  
+#错误日志采用追加模式  
+logappend=true  
+#启用日志文件，默认启用  
+journal=true  
+#这个选项可以过滤掉一些无用的日志信息，若需要调试使用请设置为false  
+quiet=true  
+#端口号 默认为27017  
+port=27017   
+auth = true
 
+启动MongoDB服务
+mongod --config "D:\Mongo\mongo.conf" 
+
+命令执行后，浏览器中输入http://127.0.0.1:27017看到如下界面即说明启动成功
+It looks like you are trying to access MongoDB over HTTP on the native driver port.
+
+不想每次都执行这个命令，可以配置成windows服务，网上教程非常多，不写了。
+
+添加管理员
+使用命令mongo进入命令行
+创建第一个用户，该用户需要有用户管理权限
+
+这里设置其角色为root
 use admin
-db.createUser(
-  {
-    user: "myUserAdmin", //用户
-    pwd: "abc123", //密码
-    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ] //权限
-  }
-)
-重启MongoDB实例
+db.createUser({user:"admin",pwd:"password",roles:["root"]})
 
-mongod --auth --port 27017 --dbpath <关联路径>
+新增的用户在system.users中
 
-终端输出”[initandlisten] waiting for connections on port 27017”, 
-启动完成
-再次打开mongo即可使用
+> db.getCollectionNames()
+[ "system.indexes", "system.users", "system.version" ]
 
-每次使用先打开终端输入 c:\data\bin\mongod --auth --port 27017 --dbpath c:\data\db
-目录以自己创建的为准
-另开一个终端输入c:\data\bin\mongo --port 27017 -u "wangzeming" -p "123456" --authenticationDatabase "admin"
+第一个用户添加完成后，便需要认证才能继续添加其他用户
+
+使用db.auth("admin", "password")认证
+
